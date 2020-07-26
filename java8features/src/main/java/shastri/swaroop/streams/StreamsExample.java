@@ -20,8 +20,17 @@ public class StreamsExample {
                 .collect(Collectors.toMap(Student::getName, Student::getActivities));
 */
         StudentDataBase.getAllStudents().stream()
+                .peek((student)->{
+                    System.out.println(student);
+                })
                 .filter(p1)
+                .peek((student)->{
+                    System.out.println("after 1st filter : " +student);
+                })
                 .filter(p2)
+                .peek((student)->{
+                    System.out.println("after 2nd filter : " +student);
+                })
                 .collect(Collectors.toMap(Student::getName, Student::getActivities));
 
         System.out.println(studentActivities);
