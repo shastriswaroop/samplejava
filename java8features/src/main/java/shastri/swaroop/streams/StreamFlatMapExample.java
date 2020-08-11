@@ -22,6 +22,7 @@ public class StreamFlatMapExample {
         List<String> activities = StudentDataBase.getAllStudents().stream()
                 .map(Student::getActivities)
                 .flatMap(List::stream)
+                .sorted()
                 .distinct()
                 .collect(toList());
         return activities;
