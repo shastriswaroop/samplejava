@@ -5,8 +5,10 @@ import shastri.swaroop.data.StudentDataBase;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.LinkedHashMap;
 
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 
 
 public class StreamGroupingByType2Example {
@@ -27,11 +29,24 @@ public class StreamGroupingByType2Example {
                         .collect(groupingBy(Student::getGradeLevel,groupingBy(student -> student.getGpa()>3.5?"Outstanding":"Average")));
 
         System.out.println(stdMap);
-
     }
 
+    public static void towLevelGrouping_2(){
+        Map<String,Integer> studentMap = StudentDataBase.getAllStudents().stream()
+                .collect(groupingBy(Student::getName, summingInt(Student::getNoteBooks)));
+        System.out.println(studentMap);
+    }
+
+    public static void threeLevelGruouping(){
+        Map<String, Set<Student>> nameStudentMap
+                = StudentDataBase.getAllStudents().stream()
+                .collect(groupingBy(Student::getName, LinkedHashMap::new , toSet()));
+        System.out.println(nameStudentMap);
+    }
 
     public static void main(String[] args) {
-        printGroupByLevel2();
+//        printGroupByLevel2();
+  //      towLevelGrouping_2();
+        threeLevelGruouping();
     }
 }

@@ -1,0 +1,227 @@
+Index: java8features/src/main/java/shastri/swaroop/streams_terminal/StreamGroupingByType2Example.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package shastri.swaroop.streams_terminal;\n\nimport shastri.swaroop.data.Student;\nimport shastri.swaroop.data.StudentDataBase;\n\nimport java.util.List;\nimport java.util.Map;\n\nimport static java.util.stream.Collectors.groupingBy;\n\n\npublic class StreamGroupingByType2Example {\n\n    public static void printGroupByLevel1(){\n        Map<Integer, List<Student>> stdMap =\n        StudentDataBase.getAllStudents()\n                .stream()\n                .collect(groupingBy(Student::getGradeLevel));\n\n        System.out.println(stdMap);\n\n    }\n    public static void printGroupByLevel2(){\n        Map<Integer, Map<String, List<Student>>> stdMap =\n                StudentDataBase.getAllStudents()\n                        .stream()\n                        .collect(groupingBy(Student::getGradeLevel,groupingBy(student -> student.getGpa()>3.5?\"Outstanding\":\"Average\")));\n\n        System.out.println(stdMap);\n\n    }\n\n\n    public static void main(String[] args) {\n        printGroupByLevel2();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- java8features/src/main/java/shastri/swaroop/streams_terminal/StreamGroupingByType2Example.java	(revision 96f023c96d11d2308dfaf2a40f79c28f5264ab98)
++++ java8features/src/main/java/shastri/swaroop/streams_terminal/StreamGroupingByType2Example.java	(date 1599218061067)
+@@ -5,8 +5,10 @@
+ 
+ import java.util.List;
+ import java.util.Map;
++import java.util.Set;
++import java.util.LinkedHashMap;
+ 
+-import static java.util.stream.Collectors.groupingBy;
++import static java.util.stream.Collectors.*;
+ 
+ 
+ public class StreamGroupingByType2Example {
+@@ -27,11 +29,24 @@
+                         .collect(groupingBy(Student::getGradeLevel,groupingBy(student -> student.getGpa()>3.5?"Outstanding":"Average")));
+ 
+         System.out.println(stdMap);
++    }
+ 
++    public static void towLevelGrouping_2(){
++        Map<String,Integer> studentMap = StudentDataBase.getAllStudents().stream()
++                .collect(groupingBy(Student::getName, summingInt(Student::getNoteBooks)));
++        System.out.println(studentMap);
+     }
+ 
++    public static void threeLevelGruouping(){
++        Map<String, Set<Student>> nameStudentMap
++                = StudentDataBase.getAllStudents().stream()
++                .collect(groupingBy(Student::getName, LinkedHashMap::new , toSet()));
++        System.out.println(nameStudentMap);
++    }
+ 
+     public static void main(String[] args) {
+-        printGroupByLevel2();
++//        printGroupByLevel2();
++  //      towLevelGrouping_2();
++        threeLevelGruouping();
+     }
+ }
+Index: java8features/src/main/java/shastri/swaroop/parallelStreams/ParallelStreamsExample.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- java8features/src/main/java/shastri/swaroop/parallelStreams/ParallelStreamsExample.java	(date 1600336109166)
++++ java8features/src/main/java/shastri/swaroop/parallelStreams/ParallelStreamsExample.java	(date 1600336109166)
+@@ -0,0 +1,33 @@
++package shastri.swaroop.parallelStreams;
++
++import java.util.function.Supplier;
++import java.util.stream.IntStream;
++
++public class ParallelStreamsExample {
++    public static int getSum(){
++        return IntStream.rangeClosed(0,100000)
++                .sum();
++    }
++    public static int getSumParallel(){
++        return IntStream.rangeClosed(0,100000)
++                .parallel()
++                .sum();
++    }
++
++    public static void printexecutiontime(Supplier sup ){
++        long startTime = System.currentTimeMillis();
++        System.out.println(sup.get());
++        long endTime = System.currentTimeMillis();
++        System.out.println(endTime - startTime);
++    }
++
++    public static void main(String[] args) {
++        System.out.println(Runtime.getRuntime().availableProcessors());
++
++        printexecutiontime(ParallelStreamsExample::getSum);
++        printexecutiontime(ParallelStreamsExample::getSumParallel);
++
++//        getSum();
++ //       getSumParallel();
++    }
++}
+Index: java8features/src/main/java/shastri/swaroop/parallelStreams/ParallelStreamExample1.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- java8features/src/main/java/shastri/swaroop/parallelStreams/ParallelStreamExample1.java	(date 1600339959344)
++++ java8features/src/main/java/shastri/swaroop/parallelStreams/ParallelStreamExample1.java	(date 1600339959344)
+@@ -0,0 +1,9 @@
++package shastri.swaroop.parallelStreams;
++
++public class ParallelStreamExample1 {
++    
++
++    public static void main(String[] args) {
++
++    }
++}
+Index: java8features/src/main/java/shastri/swaroop/examples/PrintClassLoaders.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- java8features/src/main/java/shastri/swaroop/examples/PrintClassLoaders.java	(date 1599033990208)
++++ java8features/src/main/java/shastri/swaroop/examples/PrintClassLoaders.java	(date 1599033990208)
+@@ -0,0 +1,17 @@
++package shastri.swaroop.examples;
++
++import com.sun.javafx.util.Logging;
++
++import java.util.ArrayList;
++
++public class PrintClassLoaders {
++    public static void main(String[] args) {
++        System.out.println("Classloader of this class:"
++                + PrintClassLoaders.class.getClassLoader());
++
++        System.out.println("Classloader of Logging:"
++                + Logging.class.getClassLoader());
++
++        System.out.println("Classloader of ArrayList:"
++                + ArrayList.class.getClassLoader());    }
++}
+Index: java8features/src/main/java/shastri/swaroop/examples/IdentityHashMapExample.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- java8features/src/main/java/shastri/swaroop/examples/IdentityHashMapExample.java	(date 1599035471245)
++++ java8features/src/main/java/shastri/swaroop/examples/IdentityHashMapExample.java	(date 1599035471245)
+@@ -0,0 +1,38 @@
++package shastri.swaroop.examples;
++
++import java.util.HashMap;
++import java.util.IdentityHashMap;
++import java.util.Map;
++
++//https://www.geeksforgeeks.org/identityhashmap-class-java/
++
++/*
++dentityHashMap implements Map, Serializable and Clonable interfaces and extends AbstractMap class.
++This class is not a general-purpose Map implementation. While this class implements the Map interface,
++        it intentionally violates Map’s general contract, which mandates the use of the equals method when
++        comparing objects.
++
++        IdentityHashMap uses equality operator “==” for comparing keys and values while HashMap uses equals
++        method for comparing keys and values inside Map.
++        Since IdentityHashMap doesn’t use equals() its comparatively faster than HashMap for object with
++        expensive equals().
++        IdentityHashMap doesn’t require keys to be immutable as it is not relied on equals().
++*/
++
++public class IdentityHashMapExample {
++    public static void main(String[] args) {
++        Map<String, String> hm = new HashMap<>();
++        Map<String, String> ihm = new IdentityHashMap<>();
++
++        hm.put("key1", "key1");
++        hm.put(new String("key1"), "key1");
++
++        ihm.put("key1", "key1");
++        ihm.put(new String("key1"), "key1");
++
++        System.out.println(hm.size());
++        System.out.println(ihm.size());
++
++
++    }
++}
+Index: java8features/src/main/java/shastri/swaroop/examples/SplitList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- java8features/src/main/java/shastri/swaroop/examples/SplitList.java	(date 1598419131890)
++++ java8features/src/main/java/shastri/swaroop/examples/SplitList.java	(date 1598419131890)
+@@ -0,0 +1,43 @@
++package shastri.swaroop.examples;
++
++import java.util.stream.IntStream;
++
++public class SplitList {
++    public static int getSplitPoint(int []numbers){
++        int index = 0;
++
++        int sumOfNumbers = 0;
++        for(int num : numbers){
++            sumOfNumbers += num;
++        }
++
++//        int sumOfNumbers = IntStream.rangeClosed(0, numbers.length).sum();
++        System.out.println(sumOfNumbers);
++        int tmpSum = numbers[0];
++        int diff = sumOfNumbers - numbers[0];
++        if(numbers[0]==diff){
++            return 0;
++        }
++        for(int i=1; i<numbers.length; i++){
++            tmpSum += numbers[i];
++            if(sumOfNumbers - tmpSum == diff){
++                index = i;
++                break;
++            } else {
++                int newDiff = sumOfNumbers - tmpSum;
++                if(newDiff>0){
++                    if(newDiff < diff){
++                        diff = newDiff;
++                        index = i;
++                    }
++                }
++            }
++        }
++
++        return index;
++    }
++    public static void main(String[] args) {
++        int numbers[] = {15,4,1,2,3,10};// {3,-3, 2, 5,6}; //{4,1,2,3,10};
++        System.out.println(getSplitPoint(numbers));
++    }
++}
