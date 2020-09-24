@@ -1,4 +1,4 @@
-package shastri.swaroop.ds.lrucache;
+package shastri.swaroop.datastructure.lrucache;
 
 public class Entry {
 	int value;

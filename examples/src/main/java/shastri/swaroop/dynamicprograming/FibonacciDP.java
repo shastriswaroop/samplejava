@@ -1,4 +1,4 @@
-package shastri.swaroop.dp;
+package shastri.swaroop.dynamicprograming;
 
 import java.util.stream.IntStream;
 

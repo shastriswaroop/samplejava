@@ -1,4 +1,4 @@
-package shastri.swaroop.dp;
+package shastri.swaroop.dynamicprograming;
 
 public class Factorial {
     static long factorial = 1;

@@ -1,6 +1,6 @@
-package shastri.swaroop.ds.stack;
+package shastri.swaroop.datastructure.stack;
 
-import shastri.swaroop.ds.linklist.Node;
+import shastri.swaroop.datastructure.linklist.Node;
 
 public class Stack {
 	Node first = null;

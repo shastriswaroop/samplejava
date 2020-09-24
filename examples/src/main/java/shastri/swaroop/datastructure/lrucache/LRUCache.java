@@ -1,4 +1,4 @@
-package shastri.swaroop.ds.lrucache;
+package shastri.swaroop.datastructure.lrucache;
 
 import java.util.HashMap;
 //

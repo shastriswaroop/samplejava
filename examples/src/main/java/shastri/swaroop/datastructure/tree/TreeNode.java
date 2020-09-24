@@ -1,4 +1,4 @@
-package shastri.swaroop.ds.tree;
+package shastri.swaroop.datastructure.tree;
 //https://www.youtube.com/watch?v=oSWTXtMglKE
 public class TreeNode {
     int data;

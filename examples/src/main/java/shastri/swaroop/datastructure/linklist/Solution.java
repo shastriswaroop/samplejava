@@ -1,4 +1,4 @@
-package shastri.swaroop.ds.linklist;
+package shastri.swaroop.datastructure.linklist;
 
 import java.util.Scanner;
 

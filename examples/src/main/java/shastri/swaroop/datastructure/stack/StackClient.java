@@ -1,4 +1,4 @@
-package shastri.swaroop.ds.stack;
+package shastri.swaroop.datastructure.stack;
 
 public class StackClient {
 

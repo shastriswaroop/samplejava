@@ -1,4 +1,4 @@
-package shastri.swaroop.ds.blockingqueue;
+package shastri.swaroop.datastructure.blockingqueue;
 
 import java.util.concurrent.BlockingQueue;
 

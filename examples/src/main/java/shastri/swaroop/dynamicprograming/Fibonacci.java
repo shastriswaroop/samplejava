@@ -1,4 +1,4 @@
-package shastri.swaroop.dp;
+package shastri.swaroop.dynamicprograming;
 
 public class Fibonacci {
     static int previous = 1;
